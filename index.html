@@ -27,7 +27,10 @@
             <div class="javascript_text">JavaScript</div>
             <button id="copycode"><ion-icon name="copy-outline"></ion-icon></button>
           </div>
-          <div class="code"></div>
+          <div class="code-container">
+            <div class="line-numbers" aria-hidden="true"></div>
+            <div class="code" contenteditable="true" spellcheck="false"></div>
+          </div>
         </div>
 
         <label for="CodeReader" class="custom-file-upload">
@@ -57,6 +60,7 @@
   <script src="./script/JSVR_Output.js"></script>
   <script src="./script/SetTheme.js"></script>
   <script src="./script/CopyButton.js"></script>
+  <script src="./script/JSVR_Editor.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
     const yearSpan = document.getElementById("year");

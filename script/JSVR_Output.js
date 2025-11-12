@@ -175,6 +175,10 @@ Suggerimento: prova a controllare la riga indicata nello stack.`
   });
 
   function runCodeInSandbox(code) {
+    window.JSVR = window.JSVR || {};
+    if (window.postMessage) window.postMessage({ type: 'clear' }, '*');
+    window.JSVR.runCodeInSandbox = runCodeInSandbox;
+  
     clearOutput();
 
     const oldFrame = document.getElementById("sandbox-frame");

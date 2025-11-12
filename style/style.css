@@ -135,6 +135,39 @@ input[type="file"] {
   display: none;
 }
 
+/* ===== editor: line numbers + editable area ===== */
+.code-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  background: var(--codemok-bg);
+  border-top: 1px solid var(--codemok-border-color);
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.95rem;
+}
+
+/* editable area (matches existing .code visuals) */
+.div1 .code[contenteditable="true"] {
+  outline: none;
+  caret-color: var(--js-color);
+  padding: 1rem 1.5rem;
+  overflow-y: auto;
+  white-space: pre;
+  color: var(--dub-color);
+  min-height: 600px;
+  line-height: 1.4;
+  border: none;
+  width: 100%;
+  box-sizing: border-box;
+  tab-size: 2;
+  -moz-tab-size: 2;
+}
+
+/* keep the code token colors you already defined */
+.jsvr-editable { white-space: pre; }
+
 .custom-file-upload {
   margin: 10px auto;
   display: inline-flex;
@@ -180,8 +213,9 @@ input[type="file"] {
 
 .code {
   padding: 1rem 1.5rem;
+  cursor: text;
   height: 600px;
-  overflow: auto; 
+  overflow: auto;
   color: var(--dub-color);
   font-size: 0.95rem;
   line-height: 1.4;
@@ -189,11 +223,24 @@ input[type="file"] {
   border: 1px solid var(--codemok-border-color);
   border-top: none;
   border-radius: 0 0 10px 10px;
-  counter-reset: line;
+  counter-reset: line;              /* important so .line::before shows 1,2,3... */
   font-family: monospace;
   width: 100%;
   box-sizing: border-box;
   min-width: 0;
+  outline: none;                    /* allow contenteditable to remove default outline */
+  caret-color: var(--js-color);
+  tab-size: 2;
+  -moz-tab-size: 2;
+  white-space: pre-wrap;            /* keep wrapping behavior but preserve newlines */
+  word-break: break-word;
+}
+
+/* optional: make the span inside each .line take the rest of the space */
+.line > span {
+  display: inline-block;
+  min-width: 0;
+  white-space: pre; /* preserve spaces */
 }
 
 .line {
@@ -209,7 +256,6 @@ input[type="file"] {
 }
 
 .line:hover {
-  cursor: pointer;
   background-color: var(--codemok-bg-header-color);
 }
 
