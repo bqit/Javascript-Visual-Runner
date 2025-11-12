@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript Visual Runner</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header">
+            <button><ion-icon name="sunny-outline"></ion-icon></button>
+            <button><ion-icon name="share-social-outline"></ion-icon></button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="title"></div>
+    </div>
+
+    <div class="parent">
+  <div class="div1">
+    <div class="code-mockup">
+      <div class="mockup-header">
+        <div class="javascript_text">JavaScript</div>
+        <button><ion-icon name="copy-outline"></ion-icon></button>
+      </div>
+      <div class="code"></div>
+    </div>
+
+<label for="CodeReader" class="custom-file-upload">
+  <ion-icon name="duplicate-outline"></ion-icon> Carica il file
+</label>
+<input type="file" id="CodeReader" accept=".js">
+  </div>
+
+  <div class="div2">
+    <div class="code-mockup">
+      <div class="mockup-header">
+        <div class="javascript_text">Output</div>
+        <button><ion-icon name="copy-outline"></ion-icon></button>
+      </div>
+      <div class="code"></div>
+    </div>
+  </div>
+</div>
+
+</body>
+<script src="./script/TextScrambler.js"></script>
+<script src="./script/JSVisualRunner.js"></script>
+<script src="./script/JSVR_Output.js"></script>
+<script src="./script/SetTheme.js"></script>
+</html>
