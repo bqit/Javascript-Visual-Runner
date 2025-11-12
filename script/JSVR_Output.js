@@ -37,27 +37,20 @@
     outputContainer.innerHTML = "";
   }
 
-  // PROVA A ESTRARRE riga:col dalla stack o dal messaggio (formati vari)
   function extractLineCol(errText) {
     if (!errText) return null;
-    // Cerca pattern :<line>:<col> come ...:12:34
     const m = errText.match(/:(\d+):(\d+)\)?(?:\s|$)/);
     if (m) return { line: parseInt(m[1], 10), col: parseInt(m[2], 10) };
-    // Alcuni stack hanno at <anonymous>:12:34
     const m2 = errText.match(/<anonymous>:(\d+):(\d+)/);
     if (m2) return { line: parseInt(m2[1], 10), col: parseInt(m2[2], 10) };
     return null;
   }
 
-  // Funzione che riceve l'errore grezzo e restituisce suggerimento testuale
   function analyzeError(message, stackText) {
-    const lower = (message || "").toLowerCase();
     const stack = stackText || "";
     const loc = extractLineCol(stack) || extractLineCol(message);
     const atLine = loc ? ` (riga ~${loc.line}${loc.col ? `, col ${loc.col}` : ""})` : "";
 
-    // serie di check con regex per errori comuni
-    // 1) missing ) after argument list
     if (/missing\s*\)\s*after\s*argument\s*list/i.test(message) ||
         /missing\)\s*after\s*argument\s*list/i.test(stack)) {
       return {
@@ -70,7 +63,6 @@ Suggerimento${atLine}: assicurati che tutte le parentesi siano bilanciate e che 
       };
     }
 
-    // 2) Unexpected identifier (spesso manca una virgola o uso errato)
     if (/unexpected\s*identifier/i.test(message) || /unexpected\s*token\s*identifier/i.test(message)) {
       return {
         title: "Identificatore inatteso",
@@ -83,7 +75,6 @@ Suggerimento${atLine}: controlla la sintassi intorno all'identificatore indicato
       };
     }
 
-    // 3) Unexpected token (spesso carattere extra come , ) ; o backtick)
     if (/unexpected\s*token/i.test(message) || /unterminated string constant/i.test(message)) {
       return {
         title: "Token inatteso o stringa non terminata",
@@ -96,7 +87,6 @@ Suggerimento${atLine}: controlla che la riga contenga solo token validi e che le
       };
     }
 
-    // 4) ReferenceError: x is not defined
     const refMatch = message.match(/referenceerror:\s*([^ ]+)\s*is not defined/i);
     if (refMatch) {
       const name = refMatch[1];
@@ -111,7 +101,6 @@ Suggerimento${atLine}: dichiara la variabile o verifica lo scope.`
       };
     }
 
-    // 5) TypeError: ... is not a function
     if (/is not a function/i.test(message)) {
       return {
         title: "TypeError: valore non è una funzione",
@@ -124,7 +113,6 @@ Suggerimento${atLine}: isola il valore e controllane il tipo prima della chiamat
       };
     }
 
-    // 6) SyntaxError: Unexpected end of input (spesso parentesi/brace/string non chiuse)
     if (/unexpected end of input/i.test(message) || /unexpected end/i.test(message)) {
       return {
         title: "Fine del file inattesa (mancano chiusure)",
@@ -137,7 +125,6 @@ Suggerimento${atLine}: assicurati di chiudere tutte le aperture.`
       };
     }
 
-    // 7) default fallback: tenta dare indicazioni generiche secondo parole chiave
     if (/syntaxerror/i.test(message) || /syntax error/i.test(message)) {
       return {
         title: "Errore di sintassi",
@@ -147,7 +134,6 @@ Suggerimento${atLine}: esamina la riga indicata dallo stack e verifica parentesi
       };
     }
 
-    // fallback molto generico
     return {
       title: "Errore rilevato",
       suggestion:
@@ -156,7 +142,6 @@ Suggerimento: prova a controllare la riga indicata nello stack.`
     };
   }
 
-  // ricezione dei messaggi dall'iframe
   window.addEventListener("message", (ev) => {
     const msg = ev.data;
     if (!msg || typeof msg !== "object") return;
@@ -173,15 +158,10 @@ Suggerimento: prova a controllare la riga indicata nello stack.`
         break;
 
       case "error": {
-        // Mostra l'errore così com'è
         appendOutputLine(msg.data, "error");
-
-        // Se lo stack è fornito (msg.data potrebbe essere stack o messaggio)
         const stackText = msg.stack || msg.data || "";
         const analysis = analyzeError(String(msg.data || ""), String(stackText));
-        // Mostra titolo suggerimento in evidenza
         appendOutputLine(`${analysis.title}`, "suggestion");
-        // Mostra suggerimento dettagliato (più righe possibili)
         analysis.suggestion.split("\n").forEach(line => {
           if (line.trim() === "") return;
           appendOutputLine(line.trim(), "suggestion");
@@ -190,12 +170,10 @@ Suggerimento: prova a controllare la riga indicata nello stack.`
       }
 
       default:
-        // ignora
         break;
     }
   });
 
-  // Esegue il codice in iframe (base64-safe)
   function runCodeInSandbox(code) {
     clearOutput();
 
@@ -253,7 +231,6 @@ Suggerimento: prova a controllare la riga indicata nello stack.`
     iframe.srcdoc = src;
   }
 
-  // Quando carichi un file, leggilo ed eseguilo immediatamente
   input.addEventListener("change", (e) => {
     const file = e.target.files && e.target.files[0];
     if (!file) return;
@@ -267,7 +244,6 @@ Suggerimento: prova a controllare la riga indicata nello stack.`
     reader.readAsText(file);
   });
 
-  // Accent styling per suggerimenti
   const style = document.createElement("style");
   style.textContent = `
     .div2 .line .error {

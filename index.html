@@ -12,7 +12,7 @@
     <header>
         <div class="header">
             <button><ion-icon name="sunny-outline"></ion-icon></button>
-            <button><ion-icon name="share-social-outline"></ion-icon></button>
+            <button id="sharebtn"><ion-icon name="share-social-outline"></ion-icon></button>
         </div>
     </header>
 
@@ -21,35 +21,47 @@
     </div>
 
     <div class="parent">
-  <div class="div1">
-    <div class="code-mockup">
-      <div class="mockup-header">
-        <div class="javascript_text">JavaScript</div>
-        <button><ion-icon name="copy-outline"></ion-icon></button>
-      </div>
-      <div class="code"></div>
-    </div>
+      <div class="div1">
+        <div class="code-mockup">
+          <div class="mockup-header">
+            <div class="javascript_text">JavaScript</div>
+            <button id="copycode"><ion-icon name="copy-outline"></ion-icon></button>
+          </div>
+          <div class="code"></div>
+        </div>
 
-<label for="CodeReader" class="custom-file-upload">
-  <ion-icon name="duplicate-outline"></ion-icon> Carica il file
-</label>
-<input type="file" id="CodeReader" accept=".js">
-  </div>
-
-  <div class="div2">
-    <div class="code-mockup">
-      <div class="mockup-header">
-        <div class="javascript_text">Output</div>
-        <button><ion-icon name="copy-outline"></ion-icon></button>
+        <label for="CodeReader" class="custom-file-upload">
+          <ion-icon name="duplicate-outline"></ion-icon> Carica il file
+        </label>
+        <input type="file" id="CodeReader" accept=".js">
       </div>
-      <div class="code"></div>
+
+      <div class="div2">
+        <div class="code-mockup">
+          <div class="mockup-header">
+            <div class="javascript_text">Output</div>
+            <button id="copyoutput"><ion-icon name="copy-outline"></ion-icon></button>
+          </div>
+          <div class="code"></div>
+        </div>
     </div>
   </div>
-</div>
+  
+  <footer class="footer">
+    <p><a href="https://github.com/bqit" target="_blank">bqit</a> ©<span id="year"></span></p>
+  </footer>
 
 </body>
-<script src="./script/TextScrambler.js"></script>
-<script src="./script/JSVisualRunner.js"></script>
-<script src="./script/JSVR_Output.js"></script>
-<script src="./script/SetTheme.js"></script>
+  <script src="./script/TextScrambler.js"></script>
+  <script src="./script/JSVisualRunner.js"></script>
+  <script src="./script/JSVR_Output.js"></script>
+  <script src="./script/SetTheme.js"></script>
+  <script src="./script/CopyButton.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const yearSpan = document.getElementById("year");
+    const currentYear = new Date().getFullYear();
+    yearSpan.textContent = currentYear;
+    });
+  </script>
 </html>

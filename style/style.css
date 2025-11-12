@@ -62,11 +62,20 @@ html, body {
     overflow-x: hidden;
 }
 
+a {
+  text-decoration: none;
+  color: var(--dub-color);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
 ion-icon {
     font-size: 20px;
 }
 
-button { background-color: transparent; outline: 0px; border: hidden; cursor: pointer;}
+button { background-color: transparent; outline: 0px; border: hidden; cursor: pointer; position: relative;}
 button ion-icon {color: var(--text-color); opacity: 1; transition: opacity .3s ease-in-out, transform .1s ease-in-out;}
 button ion-icon:hover {opacity: .6;}
 button ion-icon:active {
@@ -107,23 +116,21 @@ button ion-icon:active {
 }
 
 .parent {
-  margin: 50px auto 20px auto; /* centra e aggiunge margini */
+  margin: 50px auto 20px auto; 
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 colonne uguali */
-  gap: 1.5rem; /* spazio tra i mockup */
+  grid-template-columns: repeat(2, minmax(0, 1fr)); 
+  gap: 1.5rem; 
   justify-content: center;
   align-items: start;
-  max-width: 1800px; /* limite di larghezza per centrare il tutto */
+  max-width: 1800px; 
 }
 
-/* Ogni colonna (div1/div2) */
 .div1, .div2 {
   width: 100%;
   max-width: 1000px;
   box-sizing: border-box;
 }
 
-/* UPLOAD */
 input[type="file"] {
   display: none;
 }
@@ -147,7 +154,6 @@ input[type="file"] {
   opacity: 0.8;
 }
 
-/* CODE MOCKUP */
 .code-mockup {
   background: var(--codemok-bg);
   border-radius: 10px;
@@ -175,7 +181,7 @@ input[type="file"] {
 .code {
   padding: 1rem 1.5rem;
   height: 600px;
-  overflow: auto; /* scroll sia orizzontale che verticale */
+  overflow: auto; 
   color: var(--dub-color);
   font-size: 0.95rem;
   line-height: 1.4;
@@ -190,7 +196,6 @@ input[type="file"] {
   min-width: 0;
 }
 
-/* ogni riga è una piccola griglia: prima colonna = numero, seconda = contenuto */
 .line {
   display: grid;
   grid-template-columns: 3em minmax(0, 1fr);
@@ -208,12 +213,10 @@ input[type="file"] {
   background-color: var(--codemok-bg-header-color);
 }
 
-/* opzionale: mostra il messaggio d'errore al passaggio del mouse */
 .line .error[title] {
   cursor: help;
 }
 
-/* numero di riga (colonna 1) */
 .line::before {
   content: counter(line);
   color: #666;
@@ -225,14 +228,63 @@ input[type="file"] {
   opacity: 0.9;
 }
 
-/* i token del codice devono rimanere inline */
 .line > * {
   display: inline;
   white-space: pre;
   min-width: 0;
 }
 
-/* colori token (mantieni i tuoi) */
+.jsvr-tooltip {
+  position: fixed;
+  z-index: 9999;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  background: var(--text-color);
+  color: var(--bg-color);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(6px) scale(0.98);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  white-space: nowrap;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+.jsvr-tooltip-failed {
+  position: fixed;
+  z-index: 9999;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  background-color: #ce3f3f;
+  color: #FFFFFF;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(6px) scale(0.98);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  white-space: nowrap;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+.jsvr-tooltip.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.jsvr-tooltip-failed.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  color: var(--dub-color);
+  width: 100%;
+  margin-bottom: 10px;
+}
+
 .code .comment { color: var(--comment); }
 .code .variable { color: var(--variable); }
 .code .commands { color: var(--commands); }
@@ -242,7 +294,7 @@ input[type="file"] {
 
 @media (max-width: 900px) {
   .parent {
-    grid-template-columns: 1fr; /* impila le card verticalmente sui dispositivi piccoli */
+    grid-template-columns: 1fr; 
     gap: 1rem;
     padding: 0 1rem;
   }

@@ -1,6 +1,13 @@
 const input = document.getElementById("CodeReader");
 const codeContainer = document.querySelector(".code");
 
+document.addEventListener("DOMContentLoaded", () => {
+  const shareBtn = document.getElementById("sharebtn");
+  shareBtn.addEventListener("click", () => {
+    window.open("https://github.com/bqit", "_blank");
+  });
+});
+
 function escapeHTML(s) {
   return s
     .replace(/&/g, "&amp;")
@@ -15,14 +22,12 @@ function tokenizeAndHighlight(code) {
   while (i < code.length) {
     let matched = false;
     
-    // Newline character (handle first)
     if (code[i] === '\n') {
       tokens.push({ type: 'newline', value: '\n' });
       i++;
       continue;
     }
     
-    // Whitespace (spaces and tabs) - keep as plain text
     if (/[ \t]/.test(code[i])) {
       let j = i;
       while (j < code.length && /[ \t]/.test(code[j])) {
@@ -33,7 +38,6 @@ function tokenizeAndHighlight(code) {
       continue;
     }
     
-    // Multi-line comment
     if (code.substr(i, 2) === '/*') {
       const end = code.indexOf('*/', i + 2);
       if (end !== -1) {
@@ -43,7 +47,6 @@ function tokenizeAndHighlight(code) {
       }
     }
     
-    // Single-line comment (don't include the newline)
     if (!matched && code.substr(i, 2) === '//') {
       let j = i + 2;
       while (j < code.length && code[j] !== '\n') {
@@ -53,8 +56,7 @@ function tokenizeAndHighlight(code) {
       i = j;
       matched = true;
     }
-    
-    // Strings (single, double, backtick)
+
     if (!matched && (code[i] === '"' || code[i] === "'" || code[i] === '`')) {
       const quote = code[i];
       let j = i + 1;
@@ -68,8 +70,7 @@ function tokenizeAndHighlight(code) {
       i = j + 1;
       matched = true;
     }
-    
-    // Keywords and identifiers
+
     if (!matched && /[A-Za-z_$]/.test(code[i])) {
       let j = i;
       while (j < code.length && /[A-Za-z0-9_$]/.test(code[j])) {
@@ -89,8 +90,7 @@ function tokenizeAndHighlight(code) {
       i = j;
       matched = true;
     }
-    
-    // Numbers
+
     if (!matched && /\d/.test(code[i])) {
       let j = i;
       while (j < code.length && /[\d.]/.test(code[j])) {
@@ -100,15 +100,13 @@ function tokenizeAndHighlight(code) {
       i = j;
       matched = true;
     }
-    
-    // Brackets
+
     if (!matched && /[()[\]{}]/.test(code[i])) {
       tokens.push({ type: 'brackets', value: code[i] });
       i++;
       matched = true;
     }
     
-    // Operators
     if (!matched && /[=!+\-*/%<>^|&~:;.,?]/.test(code[i])) {
       let j = i;
       while (j < code.length && /[=!+\-*/%<>^|&~:;.,?]/.test(code[j])) {
@@ -119,7 +117,6 @@ function tokenizeAndHighlight(code) {
       matched = true;
     }
     
-    // Everything else
     if (!matched) {
       tokens.push({ type: 'text', value: code[i] });
       i++;
@@ -157,12 +154,10 @@ input.addEventListener("change", () => {
   const reader = new FileReader();
   reader.onload = (e) => {
     const text = e.target.result;
-    
-    // Tokenize the entire code
+
     const tokens = tokenizeAndHighlight(text);
     const highlighted = tokensToHTML(tokens);
-    
-    // Split into lines - CSS will handle line numbers via counter
+
     const html = highlighted
       .split(/\r?\n/)
       .map((line) => {
@@ -171,7 +166,6 @@ input.addEventListener("change", () => {
       })
       .join("");
 
-    // Update the display
     codeContainer.innerHTML = html;
   };
 

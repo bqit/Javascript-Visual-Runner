@@ -1,16 +1,12 @@
-// === themeToggle.js ===
 document.addEventListener("DOMContentLoaded", () => {
   const themeButton = document.querySelector("header button ion-icon").parentElement;
 
-  // Stato iniziale
   let isLight = false;
 
-  // Funzione per applicare il tema
   function applyTheme(lightMode) {
     const root = document.documentElement;
 
     if (lightMode) {
-      // Applica il tema chiaro
       for (const [name, value] of Object.entries(lightTheme)) {
         root.style.setProperty(name, value);
       }
@@ -18,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
       isLight = true;
       localStorage.setItem("theme", "light");
     } else {
-      // Applica il tema scuro
       for (const [name, value] of Object.entries(darkTheme)) {
         root.style.setProperty(name, value);
       }
@@ -28,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Variabili dei temi
   const darkTheme = {
     "--bg-color": "#070707",
     "--text-color": "#FAFAFA",
@@ -67,7 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
     "--numbers": "#d3a920ff",
   };
 
-  // Carica il tema salvato in localStorage
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "light") {
     applyTheme(true);
@@ -75,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
     applyTheme(false);
   }
 
-  // Listener per il click
   themeButton.addEventListener("click", () => {
     applyTheme(!isLight);
   });
