@@ -38,9 +38,3 @@ git clone https://github.com/tuo-username/javascript-visual-runner.git
 
 # Entra nella directory del progetto
 cd javascript-visual-runner
-
-# Installa le dipendenze
-npm install
-
-# Avvia l’applicazione
-npm start
