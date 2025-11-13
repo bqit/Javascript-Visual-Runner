@@ -1,4 +1,4 @@
-# JavaScript Visual Runner
+<img width="1920" height="1080" alt="VISUAL RUNNER" src="https://github.com/user-attachments/assets/03b6e99e-69d8-4f37-a66e-5354b16c08fa" />
 
 **JavaScript Visual Runner** è un ambiente interattivo che permette di **scrivere**, **modificare** e **leggere** codice **JavaScript**, offrendo in tempo reale **analisi, consigli e segnalazioni di errore** per migliorare la qualità del codice.
 
